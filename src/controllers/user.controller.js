@@ -4,6 +4,16 @@ const {
 } = require("../services/user.service");
 const { tokenGenerator } = require("../token/generator");
 
+const refreshToken = async (req, res) => {
+  try {
+    const data = req.body;
+    const token = tokenGenerator(data);
+    return res.status(200).json({ token });
+  } catch (error) {
+    return res.status(500).json({ message: "something went wrong" });
+  }
+};
+
 const createUser = async (req, res) => {
   try {
     const userInfo = req.body;
@@ -43,4 +53,4 @@ const getUserInfo = async (req, res) => {
   }
 };
 
-module.exports = { createUser, getUserInfo };
+module.exports = { createUser, getUserInfo, refreshToken };
