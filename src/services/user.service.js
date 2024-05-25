@@ -8,4 +8,12 @@ const getUserByEmailFromDB = async (email) => {
   return await UserSchema.findOne({ email });
 };
 
-module.exports = { saveUserInDB, getUserByEmailFromDB };
+const getTotalUserCountFromDB = async () => {
+  return await UserSchema.countDocuments({});
+};
+
+module.exports = {
+  saveUserInDB,
+  getUserByEmailFromDB,
+  getTotalUserCountFromDB,
+};

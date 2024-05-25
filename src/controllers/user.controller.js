@@ -1,6 +1,7 @@
 const {
   saveUserInDB,
   getUserByEmailFromDB,
+  getTotalUserCountFromDB,
 } = require("../services/user.service");
 const { tokenGenerator } = require("../token/generator");
 
@@ -53,4 +54,14 @@ const getUserInfo = async (req, res) => {
   }
 };
 
-module.exports = { createUser, getUserInfo, refreshToken };
+const getUserCount = async (req, res) => {
+  try {
+    const count = await getTotalUserCountFromDB();
+
+    return res.status(200).json({ count });
+  } catch (error) {
+    return res.status(404).json({ message: "User not found" });
+  }
+};
+
+module.exports = { createUser, getUserInfo, refreshToken, getUserCount };
