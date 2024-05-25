@@ -1,4 +1,4 @@
-const { UserSchema } = require("../models/user.mode");
+const { UserSchema } = require("../models/user.model");
 
 const saveUserInDB = async (info) => {
   return await UserSchema.create(info);

@@ -10,6 +10,7 @@ module.exports.isAuthenticated = (req, res, next) => {
     const token = str.split(" ")[1];
     const verified = jwt.verify(token, config.jwt_secret);
 
+    req.user = verified.data;
     if (!verified)
       return res.status(403).json({ message: "Unauthorized access denied!" });
 
