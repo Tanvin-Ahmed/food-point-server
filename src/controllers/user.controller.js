@@ -2,16 +2,31 @@ const {
   saveUserInDB,
   getUserByEmailFromDB,
 } = require("../services/user.service");
+const { tokenGenerator } = require("../token/generator");
 
 const createUser = async (req, res) => {
   try {
     const userInfo = req.body;
-    if (await getUserByEmailFromDB(userInfo.email)) {
-      return res.status(200).json({ message: "Welcome back to Food Point!" });
+    const existingUser = await getUserByEmailFromDB(userInfo.email);
+    if (existingUser) {
+      const token = tokenGenerator({
+        email: existingUser.email,
+        _id: existingUser._id,
+      });
+      return res
+        .status(200)
+        .json({ message: "Welcome back to Food Point!", token });
     }
     const user = await saveUserInDB(userInfo);
 
-    return res.status(201).json({ user, message: "Welcome to Food Point!" });
+    const token = tokenGenerator({
+      email: user.email,
+      _id: user._id,
+    });
+
+    return res
+      .status(201)
+      .json({ userDetails, token, message: "Welcome to Food Point!" });
   } catch (error) {
     return res.status(500).json({ message: "Error creating user" });
   }
