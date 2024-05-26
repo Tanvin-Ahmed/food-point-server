@@ -2,6 +2,7 @@ const {
   saveUserInDB,
   getUserByEmailFromDB,
   getTotalUserCountFromDB,
+  saveCoinInDB,
 } = require("../services/user.service");
 const { tokenGenerator } = require("../token/generator");
 
@@ -63,4 +64,21 @@ const getUserCount = async (req, res) => {
   }
 };
 
-module.exports = { createUser, getUserInfo, refreshToken, getUserCount };
+const updateCoin = async (req, res) => {
+  try {
+    const { coinAmount } = req.body;
+    const updatedUser = await saveCoinInDB(req.user._id, coinAmount);
+
+    return res.status(200).json(updatedUser);
+  } catch (error) {
+    return res.status(500).json({ message: "Coin not added in user profile!" });
+  }
+};
+
+module.exports = {
+  createUser,
+  getUserInfo,
+  refreshToken,
+  getUserCount,
+  updateCoin,
+};

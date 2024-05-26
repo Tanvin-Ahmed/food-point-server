@@ -12,8 +12,17 @@ const getTotalUserCountFromDB = async () => {
   return await UserSchema.countDocuments({});
 };
 
+const saveCoinInDB = async (id, coin) => {
+  return await UserSchema.findByIdAndUpdate(
+    id,
+    { $inc: { coins: Number(coin) } },
+    { new: true }
+  );
+};
+
 module.exports = {
   saveUserInDB,
   getUserByEmailFromDB,
   getTotalUserCountFromDB,
+  saveCoinInDB,
 };
