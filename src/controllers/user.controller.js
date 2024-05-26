@@ -35,10 +35,9 @@ const createUser = async (req, res) => {
       _id: user._id,
     });
 
-    return res
-      .status(201)
-      .json({ userDetails, token, message: "Welcome to Food Point!" });
+    return res.status(201).json({ token, message: "Welcome to Food Point!" });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({ message: "Error creating user" });
   }
 };

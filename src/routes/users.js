@@ -10,6 +10,6 @@ const router = express.Router();
 
 router.post("/refresh-token", isAuthenticated, refreshToken);
 router.post("/create", createUser);
-router.get("/get/:email", isAuthenticated, getUserInfo);
+router.get("/get/:email", getUserInfo);
 router.get("/count", getUserCount);
 module.exports = router;

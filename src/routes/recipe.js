@@ -7,6 +7,7 @@ const {
   getRecipeDetails,
   getRecipesOfSimilarCategory,
   updateReaction,
+  updateRecipePurchaseInfo,
 } = require("../controllers/recipe.controller");
 const router = express.Router();
 
@@ -20,5 +21,6 @@ router.get(
 );
 
 router.put("/reaction", isAuthenticated, updateReaction);
+router.put("/purchase-recipe", isAuthenticated, updateRecipePurchaseInfo);
 
 module.exports = router;

@@ -1,3 +1,4 @@
+const { purchaseRecipe } = require("../services/mongooseTransaction.service");
 const {
   saveRecipeInDB,
   getRecipesFromDB,
@@ -87,6 +88,23 @@ const updateReaction = async (req, res) => {
   }
 };
 
+const updateRecipePurchaseInfo = async (req, res) => {
+  try {
+    const reqData = req.body;
+    const updatedInfo = await purchaseRecipe(
+      reqData.buyerId,
+      reqData.creatorId,
+      reqData.recipeId
+    );
+
+    return res.status(200).json(updatedInfo);
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Something went wrong. Purchase not complete!" });
+  }
+};
+
 module.exports = {
   createRecipe,
   getRecipes,
@@ -94,4 +112,5 @@ module.exports = {
   getRecipeDetails,
   getRecipesOfSimilarCategory,
   updateReaction,
+  updateRecipePurchaseInfo,
 };
