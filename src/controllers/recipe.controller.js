@@ -66,8 +66,11 @@ const getRecipesOfSimilarCategory = async (req, res) => {
     const idToExclude = req.params.idToExclude;
 
     const data = await getRecipesByCategory(category, idToExclude);
+    const recipesData = JSON.parse(JSON.stringify(data));
 
-    return res.status(200).json(data);
+    return res
+      .status(200)
+      .json(recipesData.filter((recipe) => recipe._id !== idToExclude));
   } catch (error) {
     return res.status(404).json({ message: "Recipe not found!" });
   }
